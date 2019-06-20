@@ -2,10 +2,10 @@ var svgWidth = 960;
 var svgHeight = 500;
 
 var margin = {
-  top: 20,
+  top: 50,
   right: 40,
-  bottom: 80,
-  left: 100
+  bottom: 150,
+  left: 150
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -33,10 +33,9 @@ function xScale(govData, chosenXAxis) {
     .domain([d3.min(govData, d => d[chosenXAxis]),
       d3.max(govData, d => d[chosenXAxis])
     ])
-    .range([0, width]);
-
+    .range([0, width])
+    .nice();
   return xLinearScale;
-
 }
 
 // function used for updating xAxis var upon click on axis label
@@ -116,7 +115,8 @@ d3.csv("assets/data/data.csv", function(err, govData) {
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
     .domain([0, d3.max(govData, d => d.age)*1.2])//
-    .range([height, 0]);
+    .range([height, 0])
+    .nice();
 
   // Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);//
@@ -148,7 +148,7 @@ d3.csv("assets/data/data.csv", function(err, govData) {
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.obesity))//
-    .attr("r", 20)
+    .attr("r", 15)
     .attr("fill", "turquoise")
     .attr("opacity", ".5");
 
